@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+@layer base {
+	body {
+		@apply font-[Montserrat];
+		@apply bg-[#f7f7f7];
+	}
+
+	li {
+		@apply px-4;
+		@apply cursor-pointer;
+	}
+}
+
+#showcase {
+	background: url(./assets/showcase.jpg) no-repeat center center/cover;
+	height: 650px;
+}
