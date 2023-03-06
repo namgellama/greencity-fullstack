@@ -1,11 +1,10 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .models import Product
-from .serializers import ProductSerializer
-
-
-def index(request):
-    return Response("hello")
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.status import HTTP_400_BAD_REQUEST
+from django.contrib.auth.hashers import make_password
+from ..models import Product
+from ..serializers import ProductSerializer
 
 
 @api_view(['GET'])
