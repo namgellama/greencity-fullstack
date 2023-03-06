@@ -7,7 +7,7 @@ function InfoMessage({ message, link }) {
 			class="w-full bg-blue-100 border-t border-b border-blue-500 text-blue-700 px-4 py-3 "
 			role="alert"
 		>
-			<div className="flex flex-col lg:items-center justify-center">
+			<div className="flex flex-col items-center justify-center">
 				<p class="font-semibold mr-4 mb-2 text-lg">{message}</p>
 				<Link
 					to="/products"

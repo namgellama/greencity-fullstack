@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link, useParams, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import InfoMessage from '../components/shared/InfoMessage';
-import { FaTrash } from 'react-icons/fa';
+import { FaTrash, FaArrowRight } from 'react-icons/fa';
 
 function CartPage() {
 	const { id } = useParams();
@@ -48,7 +48,18 @@ function CartPage() {
 
 	return (
 		<div className="lg:w-[1100px] mx-auto py-8">
-			<h1 className="text-4xl font-semibold mb-4 text-center">Shopping Cart</h1>
+			<div className="text-center mb-8">
+				<h1 className="text-4xl font-semibold mb-2">Shopping Cart</h1>
+				{cartItems.length > 0 && (
+					<Link
+						to="/products"
+						className="text-2xl text-red-500 flex items-center justify-center"
+					>
+						More products <FaArrowRight className="ml-2" />
+					</Link>
+				)}
+			</div>
+
 			{cartItems.length === 0 ? (
 				<InfoMessage message={`Your cart is empty.`} link="Check products" />
 			) : (
