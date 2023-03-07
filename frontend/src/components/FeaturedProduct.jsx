@@ -5,7 +5,7 @@ function FeaturedProduct({ products }) {
 	const result = products.filter((product) => product.featured === true);
 	const featuredProducts = [...result];
 	return (
-		<section className=" w-full lg:w-[1200px] mx-auto text-center mt-[4rem] flex flex-col items-center">
+		<section className="w-full lg:w-[1200px] mx-auto text-center mt-[4rem] flex flex-col items-center">
 			<header>
 				<h1 className="text-2xl font-semibold">Featured Products</h1>
 				<Link
