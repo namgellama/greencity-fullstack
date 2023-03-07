@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserDetails } from '../actions/userActions';
+import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import Loader from '../components/shared/Loader';
 import DangerMessage from '../components/shared/DangerMessage';
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
 
 function ProfilePage() {
 	const [name, setName] = useState('');
@@ -22,25 +23,37 @@ function ProfilePage() {
 	const userLogin = useSelector((state) => state.userLogin);
 	const { userInfo } = userLogin;
 
+	const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+	const { success } = userUpdateProfile;
+
 	useEffect(() => {
 		if (!userInfo) {
 			navigate('/login');
 		} else {
-			if (!user || !user.name) {
+			if (!user || !user.name || success) {
+				dispatch({ type: USER_UPDATE_PROFILE_RESET });
 				dispatch(getUserDetails('profile'));
 			} else {
 				setName(user.name);
 				setEmail(user.email);
 			}
 		}
-	}, [dispatch, navigate, userInfo, user]);
+	}, [dispatch, navigate, userInfo, user, success]);
 
 	const submitHandler = (e) => {
 		e.preventDefault();
 		if (password !== confirmPassword) {
 			setMessage('Password do not match');
 		} else {
-			console.log('Updating');
+			dispatch(
+				updateUserProfile({
+					id: user._id,
+					name: name,
+					email: email,
+					password: password,
+				})
+			);
+			setMessage('');
 		}
 	};
 
@@ -48,15 +61,14 @@ function ProfilePage() {
 		<section className="w-[1300px] mx-auto py-4 my-4">
 			<div className="grid grid-cols-1fr-3fr gap-8">
 				<div className="w-[390px] px-2">
-					<h1 className="text-2xl font-medium">User Profile</h1>
+					<h1 className="text-2xl font-medium uppercase">User Profile</h1>
 					{message && <DangerMessage error={message} />}
 					{error && <DangerMessage error={error} />}
 					{loading && <Loader />}
 					<form
-						className="bg-white shadow-md rounded px-8 pt-6 pb-9 mb-4"
+						className="bg-white shadow-md rounded px-8 pt-6 pb-9 my-6"
 						onSubmit={submitHandler}
 					>
-						<h1 className="text-3xl font-semibold uppercase mb-9">Register</h1>
 						<div className="mb-4">
 							<label
 								className="block text-gray-700 text-lg font-bold mb-2"
@@ -130,7 +142,7 @@ function ProfilePage() {
 					</form>
 				</div>
 				<div>
-					<h1 className="text-2xl font-medium">My Orders</h1>
+					<h1 className="text-2xl font-medium uppercase">My Orders</h1>
 				</div>
 			</div>
 		</section>

@@ -43,7 +43,7 @@ function CartPage() {
 	};
 
 	const checkoutHandler = () => {
-		navigate('/login?redirect=shipping');
+		navigate('/login?redirect=delivery');
 	};
 
 	return (
